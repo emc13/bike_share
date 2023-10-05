@@ -1,1 +1,42 @@
+- combining data from July 2022 - July 2023 into the same table in BigQuery --
+
+SELECT *
+FROM `capstone-398715.bikeproject.july_2022`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.aug_2022`
+UNION ALL
+SELECT * 
+FROM `capstone-398715.bikeproject.sept_2022`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.oct_2022`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.nov_2022`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.dec_2022`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.jan_2023`
+UNION ALL 
+SELECT *
+FROM `capstone-398715.bikeproject.feb_2023`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.mar_2023`
+UNION ALL
+SELECT * 
+FROM `capstone-398715.bikeproject.april_2023`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.may_2023`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.june_2023`
+UNION ALL
+SELECT *
+FROM `capstone-398715.bikeproject.july_2023`
+
 
