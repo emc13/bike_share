@@ -39,4 +39,8 @@ UNION ALL
 SELECT *
 FROM `capstone-398715.bikeproject.july_2023`
 
+- checking that the data only has 3 distinct types of bike -
 
+SELECT 
+DISTINCT(rideable_type)
+FROM `capstone-398715.bikeproject.combined_data`
