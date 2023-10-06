@@ -1,4 +1,4 @@
-- combining data from July 2022 - July 2023 into the same table in BigQuery --
+- combining data from July 2022 - July 2023 into the same table in BigQuery and saving the result as a new table --
 
 SELECT *
 FROM `capstone-398715.bikeproject.july_2022`
@@ -39,8 +39,19 @@ UNION ALL
 SELECT *
 FROM `capstone-398715.bikeproject.july_2023`
 
-- checking that the data only has 3 distinct types of bike -
+- checking that the data only has 3 distinct types of bike. the table has only the 3 bike types -
 
 SELECT 
 DISTINCT(rideable_type)
 FROM `capstone-398715.bikeproject.combined_data`
+
+- checking that rows only have positive values for their ride length. the query shows that table had a 
+few rows with null values for ride lengths and ride lengths equal to 00:00:00 minutes  -
+
+SELECT 
+  ride_id,
+  start_station_name,
+  ride_length
+FROM `capstone-398715.bikeproject.combined_data`
+ORDER BY ride_length
+
