@@ -55,3 +55,11 @@ SELECT
 FROM `capstone-398715.bikeproject.combined_data`
 ORDER BY ride_length
 
+- checking that the count of unique station ids and names are the same. the returned query shows there are some
+station ids corresponding to different stations - 
+
+SELECT
+  COUNT(DISTINCT start_station_id),
+  COUNT(DISTINCT start_station_name)
+FROM `capstone-398715.bikeproject.combined_data`
+
