@@ -1,4 +1,5 @@
-- finding how many members and nonmembers there are -
+-number of members and nonmembers -
+
 
 SELECT 
   member_casual membership_status,
@@ -6,11 +7,9 @@ SELECT
 FROM `capstone-398715.bikeproject.cleaned_data` 
 GROUP BY member_casual
 
-- finding how many rides started at each station and which stations were 
-most popular for members and nonmembers. The most popular member start station
-was "Kingsbury St & Kinzie St" while the most popular nonmember start station was
-"Streeter Dr & Grand Ave". Overall "Streeter Dr & Grand Ave" was the most common 
-start station. -
+
+- number of rides starting at each station -
+
 
 SELECT 
   COUNT(ride_id) num_of_rides,
@@ -34,4 +33,88 @@ FROM `capstone-398715.bikeproject.cleaned_data`
 WHERE member_casual = "casual"
 GROUP BY start_station_name
 ORDER BY num_of_rides DESC
+
+
+- number of rides ending at each station -
+
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  end_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = 'member'
+GROUP BY end_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  end_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = 'casual'
+GROUP BY end_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  end_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY end_station_name
+ORDER BY num_of_rides DESC 
+
+
+- types of bikes by membership -
+
+
+SELECT 
+  rideable_type,
+  COUNT(*) num_of_rides,
+  (SELECT 
+    COUNT(*) as total_rides
+    FROM `capstone-398715.bikeproject.cleaned_data`
+    WHERE member_casual='casual') total_rides,
+  COUNT(*) * 100/
+  (SELECT 
+    COUNT(*) as total_rides
+    FROM `capstone-398715.bikeproject.cleaned_data`
+    WHERE member_casual='casual') percent
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = 'casual'
+GROUP BY rideable_type
+ORDER BY num_of_rides DESC
+
+SELECT 
+  rideable_type,
+  COUNT(*) num_of_rides,
+  (SELECT 
+    COUNT(*) as total_rides
+    FROM `capstone-398715.bikeproject.cleaned_data`
+    WHERE member_casual='member') total_rides,
+  COUNT(*) * 100/
+  (SELECT 
+    COUNT(*) as total_rides
+    FROM `capstone-398715.bikeproject.cleaned_data`
+    WHERE member_casual='member') percent
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = 'member' 
+GROUP BY rideable_type
+ORDER BY num_of_rides DESC
+
+
+- average ride length by membership type and average ride length overall -
+
+SELECT
+  AVG(started_at - ended_at) avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE member_casual = 'member')avg_member_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE member_casual = 'casual')avg_nonmember_ride_length
+FROM `capstone-398715.bikeproject.cleaned_data`
+
+
+- average ride length by day -
+
 
