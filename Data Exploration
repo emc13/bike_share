@@ -39,6 +39,11 @@ UNION ALL
 SELECT *
 FROM `capstone-398715.bikeproject.july_2023`
 
+- finding the amount of rows in the combined data -
+
+SELECT 
+  COUNT(*)
+FROM `capstone-398715.bikeproject.combined_data`
 - checking that the data only has 3 distinct types of bike. the table has only the 3 bike types -
 
 SELECT 
@@ -56,10 +61,24 @@ FROM `capstone-398715.bikeproject.combined_data`
 ORDER BY ride_length
 
 - checking that the count of unique station ids and names are the same. the returned query shows there are some
-station ids corresponding to different stations - 
+station ids corresponding to multiple stations - 
 
 SELECT
   COUNT(DISTINCT start_station_id),
   COUNT(DISTINCT start_station_name)
 FROM `capstone-398715.bikeproject.combined_data`
+
+- finding which station ids correspond to multiple stations, and the number of unique stations they correspond to -
+
+SELECT
+  COUNT(DISTINCT start_station_name) num_of_stations,
+  start_station_id
+FROM `capstone-398715.bikeproject.cleaned_bike_data`
+GROUP BY start_station_id
+HAVING COUNT(DISTINCT start_station_name) > 1
+ORDER BY COUNT(DISTINCT start_station_name) DESC, start_station_id
+
+
+
+
 
