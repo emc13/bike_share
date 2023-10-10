@@ -1,1 +1,37 @@
+- finding how many members and nonmembers there are -
+
+SELECT 
+  member_casual membership_status,
+  COUNT(ride_id) num_of_riders
+FROM `capstone-398715.bikeproject.cleaned_data` 
+GROUP BY member_casual
+
+- finding how many rides started at each station and which stations were 
+most popular for members and nonmembers. The most popular member start station
+was "Kingsbury St & Kinzie St" while the most popular nonmember start station was
+"Streeter Dr & Grand Ave". Overall "Streeter Dr & Grand Ave" was the most common 
+start station. -
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  start_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY start_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  start_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = "member"
+GROUP BY start_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  start_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = "casual"
+GROUP BY start_station_name
+ORDER BY num_of_rides DESC
 
