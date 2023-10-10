@@ -1,3 +1,9 @@
+- before I uploaded the datasets to BigQuery, I added "day_of_week" and "ride_length" columns in Excel. 
+I used the =WEEKDAY function to find the day of the week, and found the ride length by subtracting the 
+started_at column from the ended_at column. I formatted the ride length column as time ("37:30:55"). I 
+then checked the cell formatting for the other columns and changed the started_at and ended_at columns 
+to date and time formatting -
+
 - combining data from July 2022 - July 2023 into the same table in BigQuery and saving the result as a new table --
 
 SELECT *
