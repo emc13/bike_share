@@ -12,6 +12,7 @@ WHERE (start_station_name LIKE '%;%'
 GROUP BY start_station_name
 
 - updated the 2 mistyped stations to the correct station name -
+
 UPDATE `capstone-398715.bikeproject.combined_data`
 SET start_station_name = 'Public Rack - Pulaski Rd & 65th St'
 WHERE start_station_name = 'Public Rack - Pulaski Rd &amp; 65th St'
@@ -21,3 +22,41 @@ SET start_station_name = 'Public Rack - Kedzie Ave & 62nd Pl'
 WHERE start_station_name = 'Public Rack - Kedzie Ave &amp; 62nd Pl'
 
     
+- cleaned the data and saved the results as a new table -
+
+CREATE TABLE IF NOT EXISTS `capstone-398715.bikeproject.cleaned_data` AS
+SELECT *,
+CASE 
+  WHEN day_of_week = 1 THEN "Sunday"
+    WHEN day_of_week = 2 THEN "Monday"
+    WHEN day_of_week = 3 THEN "Tuesday"
+    WHEN day_of_week = 4 THEN "Wednesday"
+    WHEN day_of_week = 5 THEN "Thursday"
+    WHEN day_of_week = 6 THEN "Friday"
+    ELSE "Saturday"
+    END as day_of_the_week,
+CASE
+  WHEN EXTRACT(MONTH FROM started_at) = 1 THEN "January"
+  WHEN EXTRACT(MONTH FROM started_at) = 2 THEN "February"
+  WHEN EXTRACT(MONTH FROM started_at) = 3 THEN "March"
+  WHEN EXTRACT(MONTH FROM started_at) = 4 THEN "April"
+  WHEN EXTRACT(MONTH FROM started_at) = 5 THEN "May"
+  WHEN EXTRACT(MONTH FROM started_at) = 6 THEN "June"
+  WHEN EXTRACT(MONTH FROM started_at) = 7 THEN "July"
+  WHEN EXTRACT(MONTH FROM started_at) = 8 THEN "August"
+  WHEN EXTRACT(MONTH FROM started_at) = 9 THEN "September"
+  WHEN EXTRACT(MONTH FROM started_at) = 10 THEN "October"
+  WHEN EXTRACT(MONTH FROM started_at) = 11 THEN "November"
+  ELSE "December"
+  END as month,
+CASE
+  WHEN EXTRACT(YEAR FROM started_at) = 2022 THEN "2022"
+  ELSE '2023'
+  END AS year
+FROM `capstone-398715.bikeproject.combined_data`
+WHERE start_station_id IS NOT NULL 
+AND start_station_name IS NOT NULL 
+AND end_station_id IS NOT NULL 
+AND end_station_name IS NOT NULL
+AND ride_length IS NOT NULL 
+AND ride_length > "0:00:00"
