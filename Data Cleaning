@@ -1,0 +1,9 @@
+- first I checked that the entries in the "rideable_type" column were either 
+  "electric_bike", "classic_bike", or "docked_bike" since those are the only bike types offered -
+
+SELECT 
+  DISTINCT(rideable_type)
+FROM `capstone-398715.bikeproject.combined_data`
+
+
+    
