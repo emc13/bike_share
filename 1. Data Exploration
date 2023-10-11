@@ -4,6 +4,7 @@ started_at column from the ended_at column. I formatted the ride length column a
 then checked the cell formatting for the other columns and changed the started_at and ended_at columns 
 to date and time formatting -
 
+
 # combining data from July 2022 - July 2023 into the same table 
 
 CREATE TABLE IF NOT EXISTS 'capstone-398715.bikeproject.combined_data' as
@@ -46,17 +47,20 @@ UNION ALL
 SELECT *
 FROM `capstone-398715.bikeproject.july_2023`)
 
+
 # finding the amount of rows in the combined data -
 
 SELECT 
   COUNT(*)
 FROM `capstone-398715.bikeproject.combined_data`
 
+
 # checking that the data only has 3 distinct types of bike. the table has only the 3 bike types -
 
 SELECT 
 DISTINCT(rideable_type)
 FROM `capstone-398715.bikeproject.combined_data`
+
 
 # checking that rows only have positive values for their ride length. the query shows that table had a 
 few rows with null values for ride lengths and ride lengths equal to 00:00:00 minutes
@@ -68,6 +72,7 @@ SELECT
 FROM `capstone-398715.bikeproject.combined_data`
 ORDER BY ride_length
 
+
 # checking that the count of unique station ids and names are the same. the returned query shows there are some
 station ids corresponding to multiple stations 
 
@@ -75,6 +80,7 @@ SELECT
   COUNT(DISTINCT start_station_id),
   COUNT(DISTINCT start_station_name)
 FROM `capstone-398715.bikeproject.combined_data`
+
 
 # finding which station ids correspond to multiple stations, and the number of unique stations they correspond to 
 
