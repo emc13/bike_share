@@ -11,6 +11,7 @@ WHERE (start_station_name LIKE '%;%'
   OR start_station_name LIKE "%<%")
 GROUP BY start_station_name
 
+
 # updating the 2 mistyped stations to the correct station name 
 
 UPDATE `capstone-398715.bikeproject.combined_data`
@@ -22,7 +23,7 @@ SET start_station_name = 'Public Rack - Kedzie Ave & 62nd Pl'
 WHERE start_station_name = 'Public Rack - Kedzie Ave &amp; 62nd Pl'
 
     
-# cleaned the data and saved the results as a new table 
+# cleaning the data and saving the results as a new table 
 
 CREATE TABLE IF NOT EXISTS `capstone-398715.bikeproject.cleaned_data` AS
 SELECT *,
