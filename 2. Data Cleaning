@@ -50,8 +50,8 @@ CASE
   ELSE "December"
   END as month,
 CASE
-  WHEN EXTRACT(YEAR FROM started_at) = 2022 THEN "2022"
-  ELSE '2023'
+  WHEN EXTRACT(YEAR FROM started_at) = 22 THEN "2022"
+  ELSE "2023"
   END AS year
 FROM `capstone-398715.bikeproject.combined_data`
 WHERE start_station_id IS NOT NULL 
