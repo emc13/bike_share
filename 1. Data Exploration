@@ -4,7 +4,7 @@ started_at column from the ended_at column. I formatted the ride length column a
 then checked the cell formatting for the other columns and changed the started_at and ended_at columns 
 to date and time formatting -
 
-_combining data from July 2022 - July 2023 into the same table_
+<strong>bold combining data from July 2022 - July 2023 into the same table</strong>
 
 CREATE TABLE IF NOT EXISTS capstone-398715.bikeproject.combined_data as
 (SELECT *
