@@ -127,6 +127,18 @@ GROUP BY time_of_day, member_casual
 ORDER BY num_of_rides DESC
 
 
+- number of rides by month and year -
+
+
+SELECT
+  COUNT(ride_id) num_of_rides,
+  year,
+  month
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY year, month
+ORDER BY num_of_rides DESC
+
+
 - number of rides starting at each station by membership type -
 
 
