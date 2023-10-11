@@ -1,5 +1,5 @@
-- looking for station names with improper values (ex. "&" or ":"). The start station has 2 mistyped entries
-"Public Rack - Kedzie Ave &amp; 62nd Pl" and "Public Rack - Pulaski Rd &amp; 65th St" -
+# looking for station names with improper values (ex. "&" or ":"). The start station has 2 mistyped entries
+"Public Rack - Kedzie Ave &amp; 62nd Pl" and "Public Rack - Pulaski Rd &amp; 65th St" 
 
 SELECT
  start_station_name
@@ -11,7 +11,7 @@ WHERE (start_station_name LIKE '%;%'
   OR start_station_name LIKE "%<%")
 GROUP BY start_station_name
 
-- updated the 2 mistyped stations to the correct station name -
+# updating the 2 mistyped stations to the correct station name 
 
 UPDATE `capstone-398715.bikeproject.combined_data`
 SET start_station_name = 'Public Rack - Pulaski Rd & 65th St'
@@ -22,7 +22,7 @@ SET start_station_name = 'Public Rack - Kedzie Ave & 62nd Pl'
 WHERE start_station_name = 'Public Rack - Kedzie Ave &amp; 62nd Pl'
 
     
-- cleaned the data and saved the results as a new table -
+# cleaned the data and saved the results as a new table 
 
 CREATE TABLE IF NOT EXISTS `capstone-398715.bikeproject.cleaned_data` AS
 SELECT *,
