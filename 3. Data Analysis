@@ -8,61 +8,7 @@ FROM `capstone-398715.bikeproject.cleaned_data`
 GROUP BY member_casual
 
 
-- number of rides starting at each station -
-
-
-SELECT 
-  COUNT(ride_id) num_of_rides,
-  start_station_name
-FROM `capstone-398715.bikeproject.cleaned_data`
-GROUP BY start_station_name
-ORDER BY num_of_rides DESC
-
-SELECT 
-  COUNT(ride_id) num_of_rides,
-  start_station_name
-FROM `capstone-398715.bikeproject.cleaned_data`
-WHERE member_casual = "member"
-GROUP BY start_station_name
-ORDER BY num_of_rides DESC
-
-SELECT 
-  COUNT(ride_id) num_of_rides,
-  start_station_name
-FROM `capstone-398715.bikeproject.cleaned_data`
-WHERE member_casual = "casual"
-GROUP BY start_station_name
-ORDER BY num_of_rides DESC
-
-
-- number of rides ending at each station -
-
-
-SELECT 
-  COUNT(ride_id) num_of_rides,
-  end_station_name
-FROM `capstone-398715.bikeproject.cleaned_data`
-WHERE member_casual = 'member'
-GROUP BY end_station_name
-ORDER BY num_of_rides DESC
-
-SELECT 
-  COUNT(ride_id) num_of_rides,
-  end_station_name
-FROM `capstone-398715.bikeproject.cleaned_data`
-WHERE member_casual = 'casual'
-GROUP BY end_station_name
-ORDER BY num_of_rides DESC
-
-SELECT 
-  COUNT(ride_id) num_of_rides,
-  end_station_name
-FROM `capstone-398715.bikeproject.cleaned_data`
-GROUP BY end_station_name
-ORDER BY num_of_rides DESC 
-
-
-- types of bikes by membership -
+- percentage and number of rides by type of bike and membership -
 
 
 SELECT 
@@ -102,6 +48,7 @@ ORDER BY num_of_rides DESC
 
 - average ride length by membership type and average ride length overall -
 
+
 SELECT
   AVG(started_at - ended_at) avg_ride_length,
   (SELECT
@@ -118,3 +65,137 @@ FROM `capstone-398715.bikeproject.cleaned_data`
 - average ride length by day -
 
 
+SELECT
+  AVG(started_at - ended_at) avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 1) sunday_avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 2 ) monday_avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 3 ) tuesday_avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 4 ) wednesday_avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 5 ) thursday_avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 6 ) friday_avg_ride_length,
+  (SELECT
+    AVG(started_at - ended_at) 
+  FROM `capstone-398715.bikeproject.cleaned_data`
+  WHERE day_of_week = 7 ) saturday_avg_ride_length
+FROM `capstone-398715.bikeproject.cleaned_data`
+
+
+- rides by day of the week -
+
+
+SELECT 
+  COUNT(ride_id) as num_of_rides,
+  member_casual membership_type,
+  day_of_the_week
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY day_of_the_week, member_casual
+ORDER BY num_of_rides DESC
+
+
+- rides by time of day -
+
+
+SELECT 
+  member_casual membership_type,
+  CASE
+    WHEN CAST(started_at AS time) BETWEEN '05:00:00' AND '12:00:00' THEN "morning"
+    WHEN CAST(started_at AS time) BETWEEN '12:00:00' AND '17:00:00' THEN "afternoon"
+    WHEN CAST(started_at AS time) BETWEEN '17:00:00' AND '21:00:00' THEN "evening"
+    ELSE "night"
+    END as time_of_day,
+  COUNT(ride_id) as num_of_rides
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY time_of_day, member_casual
+ORDER BY num_of_rides DESC
+
+
+- number of rides starting at each station by membership type -
+
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  start_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY start_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  start_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = "member"
+GROUP BY start_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  start_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = "casual"
+GROUP BY start_station_name
+ORDER BY num_of_rides DESC
+
+
+- number of rides ending at each station by membership type -
+
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  end_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = 'member'
+GROUP BY end_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  end_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE member_casual = 'casual'
+GROUP BY end_station_name
+ORDER BY num_of_rides DESC
+
+SELECT 
+  COUNT(ride_id) num_of_rides,
+  end_station_name
+FROM `capstone-398715.bikeproject.cleaned_data`
+GROUP BY end_station_name
+ORDER BY num_of_rides DESC 
+
+- percentage and number of rides starting and ending at the same station -
+
+
+SELECT 
+  COUNT(*) num_of_rides,
+  member_casual membership_type,
+  (SELECT 
+    COUNT(*) as total_rides
+    FROM `capstone-398715.bikeproject.cleaned_data`
+    ) total_rides,
+  COUNT(*) * 100/
+  (SELECT 
+    COUNT(*) as total_rides
+    FROM `capstone-398715.bikeproject.cleaned_data`
+   ) percent
+FROM `capstone-398715.bikeproject.cleaned_data`
+WHERE start_station_name=end_station_name
+GROUP BY member_casual
+ 
