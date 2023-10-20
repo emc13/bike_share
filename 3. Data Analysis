@@ -62,37 +62,11 @@ FROM `capstone-398715.bikeproject.cleaned_data`
 # average ride length by day 
 
 SELECT
-  AVG(started_at - ended_at) avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 1) sunday_avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 2 ) monday_avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 3 ) tuesday_avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 4 ) wednesday_avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 5 ) thursday_avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 6 ) friday_avg_ride_length,
-  (SELECT
-    AVG(started_at - ended_at) 
-  FROM `capstone-398715.bikeproject.cleaned_data`
-  WHERE day_of_week = 7 ) saturday_avg_ride_length
+  day_of_the_week,
+  AVG(started_at - ended_at) avg_ride
 FROM `capstone-398715.bikeproject.cleaned_data`
-
+GROUP BY day_of_the_week
+ORDER BY avg_ride
 
 # rides by day of the week 
 
